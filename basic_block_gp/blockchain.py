@@ -92,12 +92,12 @@ class Blockchain(object):
         zeroes
         :return: A valid proof for the provided block
         """
-        # TODO
         block_string = json.dumps(block, sort_keys=True).encode()
 
         proof = 0
         while self.valid_proof(block_string, proof) is False:
             proof += 1
+
         return proof
         # return proof
 
@@ -114,7 +114,7 @@ class Blockchain(object):
         :return: True if the resulting hash is a valid proof, False otherwise
         """
 
-        guess = f'{block_string}{proof}'.encode
+        guess = f'{block_string}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         # TODO
         # return True or False
@@ -172,17 +172,15 @@ def mine():
     proof = blockchain.proof_of_work(blockchain.last_block)
 
     # We must receive a reward for finding the proof.
-    # TODO:
     # The sender is "0" to signify that this node has mine a new coin
     # The recipient is the current node, it did the mining!
     # The amount is 1 coin as a reward for mining the next block
     blockchain.new_transaction(
-        sender = '0',
-        recipient = node_identifier,
+        sender ="0",
+        recipient=node_identifier,
         amount=1,
     )
     # Forge the new Block by adding it to the chain
-    # TODO
     previous_hash = blockchain.hash(blockchain.last_block)
     block = blockchain.new_block(proof, previous_hash)
 
@@ -232,7 +230,7 @@ def validate_chain():
     }
     return jsonify(response), 200
 
-    
+
 # Run the program on port 5000
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
